@@ -1,0 +1,33 @@
+<div class="flex flex-col gap-6">
+    <div class="space-y-4">
+        <label class="text-sm font-medium text-slate-700 flex justify-between">
+            <span>Type your name</span>
+            <span class="text-xs text-slate-400">Size: {{ fontSize }}pt</span>
+        </label>
+        <div class="flex flex-col sm:flex-row gap-4">
+            <input [(ngModel)]="name" (ngModelChange)="onNameChange()" placeholder="John Doe"
+                class="flex-1 px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all" />
+
+            <div class="flex items-center gap-3 px-4 py-2 bg-slate-50 rounded-xl border border-slate-100 min-w-[200px]">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="text-slate-400">
+                    <path d="M4 7V4h16v3" />
+                    <path d="M9 20h6" />
+                    <path d="M12 4v16" />
+                </svg>
+                <input type="range" min="8" max="24" [(ngModel)]="fontSize" (ngModelChange)="onSizeChange()"
+                    class="flex-1 h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-primary-600" />
+            </div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div *ngFor="let font of fonts" (click)="selectFont(font)"
+            class="relative p-6 border-2 rounded-xl cursor-pointer transition-all hover:shadow-md"
+            [ngClass]="selectedFont === font ? 'border-primary-500 bg-primary-50' : 'border-slate-100 hover:border-slate-200'">
+            <p [style.font-family]="font" [style.color]="color" class="text-3xl truncate">{{ name || 'John Doe' }}</p>
+            <span class="absolute top-2 right-2 text-[10px] text-slate-400 font-mono">{{ font }}</span>
+        </div>
+    </div>
+</div>

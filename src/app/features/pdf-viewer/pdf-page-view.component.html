@@ -1,0 +1,49 @@
+<div class="relative inline-block shadow-lg rounded-sm overflow-hidden bg-white mt-12 mb-12 select-none">
+    <!-- PDF Page Canvas -->
+    <img *ngIf="pageImage" [src]="pageImage" class="max-w-full h-auto block pointer-events-none" />
+    <div *ngIf="!pageImage" class="w-[595px] h-[842px] bg-slate-100 animate-pulse flex items-center justify-center">
+        <span class="text-slate-400">Loading page...</span>
+    </div>
+
+    <!-- Interaction Layer for Placing -->
+    <div *ngIf="isPlacing && !isModalOpen" class="absolute inset-0 z-[100] cursor-crosshair bg-transparent"
+        (mousedown)="onMouseDown($event)" (mousemove)="onMouseMove($event)" (mouseup)="onMouseUp()"
+        (mouseleave)="onMouseUp()">
+    </div>
+
+    <!-- Interaction Layer for Moving (CAPTURES EVERYTHING WHEN MOVING) -->
+    <div *ngIf="isMoving" class="absolute inset-0 z-[200] cursor-move bg-transparent" (mousemove)="onMouseMove($event)"
+        (mouseup)="onMouseUp()" (mouseleave)="onMouseUp()">
+    </div>
+
+    <!-- Selection Box (While Dragging) -->
+    <div *ngIf="isDragging && !isModalOpen"
+        class="absolute border-2 border-primary-500 bg-primary-500/10 z-[110] pointer-events-none"
+        [style.left.px]="selectionRect.x" [style.top.px]="selectionRect.y" [style.width.px]="selectionRect.width"
+        [style.height.px]="selectionRect.height"></div>
+
+    <!-- Signatures Overlay -->
+    <div *ngFor="let sig of signatures" class="absolute cursor-move group z-[50]"
+        (mousedown)="onSignatureMouseDown($event, sig)" [style.left.px]="sig.position.x" [style.top.px]="sig.position.y"
+        [style.width.px]="sig.width" [style.height.px]="sig.height">
+        <img [src]="sig.data" class="w-full h-full object-contain pointer-events-none" />
+        <div *ngIf="sig.dateStamp"
+            class="absolute -bottom-4 left-0 right-0 text-[10px] text-center font-mono text-blue-600 pointer-events-none">
+            {{ sig.dateStamp }}
+        </div>
+
+        <!-- Controls -->
+        <button *ngIf="!isPlacing" (mousedown)="$event.stopPropagation()" (click)="onRemoveSignature.emit(sig.id)"
+            class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity shadow-sm z-[120]">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 6 6 18" />
+                <path d="m6 6 12 12" />
+            </svg>
+        </button>
+    </div>
+
+    <!-- Standard Overlay (When NOT placing/moving, helps with hover effects if needed) -->
+    <div *ngIf="!isPlacing && !isMoving" class="absolute inset-0 z-10">
+    </div>
+</div>

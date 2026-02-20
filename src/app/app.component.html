@@ -1,0 +1,86 @@
+<div class="min-h-screen bg-[#F5F5F5] font-sans selection:bg-primary-100 selection:text-primary-900">
+
+    <!-- Upload View -->
+    <main *ngIf="!isPdfLoaded"
+        class="flex flex-col items-center justify-center min-h-screen p-6 animate-in fade-in duration-700">
+        <div class="max-w-2xl w-full space-y-12">
+            <div class="space-y-4 text-center">
+                <div class="flex items-center justify-center gap-3 mb-6">
+                    <div class="bg-[#EB1000] p-2 rounded-lg shadow-md">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                            stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
+                            <polyline points="14 2 14 8 20 8" />
+                        </svg>
+                    </div>
+                    <span class="text-3xl font-black text-slate-800 tracking-tighter">Fello Sign</span>
+                </div>
+                <h1 class="text-5xl font-extrabold text-[#2C2C2C] tracking-tight">Sign with confidence</h1>
+                <p class="text-xl text-slate-500">Securely sign, fill, and send PDF documents online.</p>
+            </div>
+
+            <div (click)="fileInput.click()" (dragover)="$event.preventDefault()" (drop)="onFileDrop($event)"
+                class="group relative border-2 border-dashed border-slate-300 rounded-lg bg-white p-20 transition-all hover:bg-slate-50 cursor-pointer overflow-hidden text-center">
+                <input #fileInput type="file" class="hidden" accept="application/pdf"
+                    (change)="onFileSelected($event)" />
+
+                <div class="space-y-6">
+                    <div
+                        class="p-4 bg-primary-50 rounded-full w-fit mx-auto transition-colors group-hover:bg-primary-100">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="text-primary-600">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                            <polyline points="17 8 12 3 7 8" />
+                            <line x1="12" x2="12" y1="3" y2="15" />
+                        </svg>
+                    </div>
+                    <div class="space-y-2">
+                        <p class="text-2xl font-bold text-slate-800">Select a file</p>
+                        <p class="text-base text-slate-500">or drag and drop a PDF here</p>
+                    </div>
+                    <app-button variant="primary"
+                        className="mt-4 px-10 py-3 text-lg font-semibold rounded-full shadow-lg">
+                        Select File
+                    </app-button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-3 gap-8 pt-10 border-t border-slate-200">
+                <div class="text-center space-y-2">
+                    <div class="text-primary-600 font-bold">Safe</div>
+                    <p class="text-xs text-slate-400">Files are processed locally</p>
+                </div>
+                <div class="text-center space-y-2">
+                    <div class="text-primary-600 font-bold">Fast</div>
+                    <p class="text-xs text-slate-400">No upload waiting time</p>
+                </div>
+                <div class="text-center space-y-2">
+                    <div class="text-primary-600 font-bold">Free</div>
+                    <p class="text-xs text-slate-400">No subscription required</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <app-pdf-viewer *ngIf="isPdfLoaded" [totalPages]="totalPages" [signatures]="signatures" [isPlacing]="isPlacing"
+        [isModalOpen]="isModalOpen || isTextModalOpen" (onCancel)="isPdfLoaded = false; signatures = []"
+        (onDownload)="downloadSignedPdf()" (onPlaceSignature)="handleBoxDrawn($event)"
+        (onRemoveSignature)="removeSignature($event)" (onSignatureMoved)="handleSignatureMoved($event)"
+        (onStartPlacing)="startPlacing($event)" (onCancelPlacing)="cancelPlacing()"></app-pdf-viewer>
+
+    <!-- Modals -->
+    <app-signature-modal [isOpen]="isModalOpen" (onClose)="isModalOpen = false"
+        (onSave)="handleSignatureSave($event)"></app-signature-modal>
+
+    <app-text-input-modal [isOpen]="isTextModalOpen" (onClose)="isTextModalOpen = false"
+        (onSave)="handleTextSave($event)"></app-text-input-modal>
+
+    <!-- Loading Overlay -->
+    <div *ngIf="isLoading" class="fixed inset-0 z-[100] bg-white/60 backdrop-blur-sm flex items-center justify-center">
+        <div class="flex flex-col items-center gap-4">
+            <div class="w-12 h-12 border-4 border-primary-200 border-t-primary-600 rounded-full animate-spin"></div>
+            <p class="text-sm font-medium text-slate-600">Processing document...</p>
+        </div>
+    </div>
+</div>

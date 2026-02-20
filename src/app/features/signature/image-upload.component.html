@@ -1,0 +1,28 @@
+<div class="flex flex-col items-center justify-center border-2 border-dashed border-slate-200 rounded-xl bg-slate-50 p-12 transition-all hover:border-primary-400 hover:bg-slate-100 cursor-pointer"
+    (click)="fileInput.click()" (dragover)="$event.preventDefault()" (drop)="onDrop($event)">
+    <input #fileInput type="file" class="hidden" accept="image/*" (change)="onFileSelected($event)" />
+
+    <div *ngIf="!previewUrl" class="text-center space-y-3">
+        <div class="p-3 bg-white rounded-full shadow-sm mx-auto w-fit">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="text-primary-600">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="17 8 12 3 7 8" />
+                <line x1="12" x2="12" y1="3" y2="15" />
+            </svg>
+        </div>
+        <div>
+            <p class="text-sm font-semibold text-slate-700">Click to upload or drag and drop</p>
+            <p class="text-xs text-slate-500">PNG, JPG or SVG (max. 2MB)</p>
+        </div>
+    </div>
+
+    <div *ngIf="previewUrl" class="relative group">
+        <img [src]="previewUrl" class="max-h-48 rounded-lg shadow-sm" alt="Preview" />
+        <div
+            class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center rounded-lg">
+            <p class="text-white text-xs font-medium">Click to change</p>
+        </div>
+    </div>
+</div>
