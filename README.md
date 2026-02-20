@@ -1,59 +1,60 @@
-# PdfSigner
+# Fello Sign
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.4.
+Fello Sign is a professional web-based tool designed to handle PDF signing and annotation with high precision and security. It allows users to upload PDF documents, add stylized signatures or plain text annotations, and export the signed results with professional accuracy.
 
-## Development server
+## Features
 
-To start a local development server, run:
+### Signature Management
+- **Draw Signature**: Free-hand drawing pad with smooth stroke capture.
+- **Type Signature**: Multiple professional handwriting fonts for quick signing.
+- **Upload Signature**: Support for image-based signatures with transparent background support.
+- **Styling**: Choice of professional ink colors including Black, Navy, and Red.
+- **Date Stamping**: Optional automatic blue ink date stamp centered beneath the signature.
 
+### Text Annotations
+- Dedicated tool for adding plain text notes, names, or additional dates to any PDF page.
+- Same smooth repositioning capabilities as signature elements.
+
+### User Experience
+- **Smooth Drag-and-Drop**: High-priority interaction layers ensure responsive repositioning of all elements.
+- **Precision Drawing**: Dedicated selection tools for defining the exact size and location of signatures.
+- **Real-time Feedback**: Visual cues for placement, sizing, and alignment.
+- **Automatic Cleanup**: Input modals reset automatically after use for a fluid workflow.
+
+### PDF Processing
+- Local processing ensures document privacy.
+- Pixel-perfect coordinate mapping between browser UI and PDF points.
+- High-quality font embedding and image composition.
+
+## Technical Stack
+- **Frontend**: Angular with Standalone Components.
+- **Styling**: Tailwind CSS for a premium, responsive interface.
+- **PDF Engine**: pdf-lib for document manipulation and pdfjs-dist for high-quality rendering.
+- **Signature Engine**: signature_pad for smooth vector-based drawing.
+
+## Setup and Development
+
+### Prerequisites
+- Node.js and npm installed on your system.
+- Angular CLI installed globally.
+
+### Installation
+1. Clone the repository to your local machine.
+2. Run `npm install` to install project dependencies.
+
+### Development Server
+Run the following command to start a local development server:
 ```bash
 ng serve
 ```
+Navigate to `http://localhost:4200/` in your browser. The application will reload automatically upon source file changes.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
+### Build
+To create a production-ready build, run:
 ```bash
 ng build
 ```
+The compiled artifacts will be stored in the `dist/` directory.
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## License
+Refer to the project's license documentation for usage rights and restrictions.
